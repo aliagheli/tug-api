@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDriverRequest;
+use App\Http\Resources\DriverResource;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 
@@ -13,13 +14,13 @@ class DriverController extends Controller
      */
     public function index()
     {
-        return response()->json(Driver::all());
+        return DriverResource::collection(Driver::all());
     }
 
     public function store(StoreDriverRequest $request)
     {
         $driver = Driver::create($request->all());
-        return response()->json($driver, 201);
+        return new DriverResource($driver);
     }
 
     /**

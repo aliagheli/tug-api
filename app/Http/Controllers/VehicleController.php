@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVehicleRequest;
+use App\Http\Resources\VehicleResource;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        return response()->json(Vehicle::all());
+        return VehicleResource::collection(Vehicle::all());
     }
 
     /**
@@ -22,7 +23,7 @@ class VehicleController extends Controller
     public function store(StoreVehicleRequest $request)
     {
         $vehicle = Vehicle::create($request->all());
-        return response()->json($vehicle, 201);
+        return new VehicleResource($vehicle);
     }
 
     /**
