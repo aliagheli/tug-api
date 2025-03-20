@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreVehicleRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
@@ -18,17 +19,9 @@ class VehicleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreVehicleRequest $request)
     {
-        $request->validate([
-            'plate_number' => 'required|unique:vehicles',
-            'brand' => 'required|string',
-            'model' => 'required|string',
-            'year' => 'required|integer|min:1900|max:' . date('Y'),
-        ]);
-
         $vehicle = Vehicle::create($request->all());
-
         return response()->json($vehicle, 201);
     }
 

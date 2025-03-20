@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDriverRequest;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 
@@ -15,16 +16,9 @@ class DriverController extends Controller
         return response()->json(Driver::all());
     }
 
-    public function store(Request $request)
+    public function store(StoreDriverRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'license_number' => 'required|unique:drivers',
-            'phone_number' => 'required|string',
-        ]);
-
         $driver = Driver::create($request->all());
-
         return response()->json($driver, 201);
     }
 
