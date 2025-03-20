@@ -2,7 +2,12 @@
 
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Resources\ErrorResource;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::prefix('api')->withoutMiddleware('web')->group(function () {
     Route::prefix('vehicles')->group(function () {
@@ -15,4 +20,11 @@ Route::prefix('api')->withoutMiddleware('web')->group(function () {
         Route::get('/', [DriverController::class, 'index']);
         Route::post('/', [DriverController::class, 'store']);
     });
+});
+
+Route::fallback(function () {
+    return new ErrorResource(
+        message: 'Route not found',
+        status: 404,
+    );
 });
